@@ -23,7 +23,7 @@ export const BOIL_VENT = boilingAt(P_AIR);
 // has followed it, and of the five probes on the gauge board.
 export const CONDUIT_M = 22;
 export const PROBES = [3, 7, 12, 17, 21];
-export const SCALE = [85, 140];
+export const SCALE = [80, 135];
 
 // The National Park Service predicts from the length of the last eruption:
 // under 2.5 minutes, the next comes about 65 minutes after it started;
@@ -149,21 +149,26 @@ export function pressureAt(depth, state) {
 export const boilingNow = (depth, state) => boilingAt(pressureAt(depth, state));
 export const boilingFull = (depth) => boilingAt(P_AIR + (RHO * G0 * depth) / 1000);
 
-// Water temperature at a probe. Water reaches the conduit from depth close to
-// its boiling point, while cooler water seeps in near the top; heat from below
-// closes the gap through the refill. In an eruption the falling pressure makes
-// the water flash, and flashing cools it to the new, lower boiling point.
+// Minutes for flashing water to cool to its new, lower boiling point.
+export const FLASH = 0.3;
+
+// Water temperature at a probe. A probe above the water reads the steam around
+// it. Water rising into the conduit arrives some degrees below the boiling
+// point at its depth, and cooler water seeps in near the top; heat from below
+// closes the gap through the refill, so by the preplay the column is at its
+// boiling point all the way down. When an eruption starts the pressure falls
+// at once but the water is still as hot as the full column let it be: it is
+// superheated, and it flashes to steam until it has cooled to the new,
+// lower boiling point.
 export function temperatureAt(depth, cycle, minute) {
   const state = stateAt(cycle, minute);
-  const full = boilingFull(depth);
-  const deficit = 4 + 14 * Math.exp(-depth / 6);
-  const { duration, interval } = cycle;
-  const erupting = minute < duration + DRAIN;
-  const warmth = erupting ? 0.3 * smoothstep(duration, duration + DRAIN, minute) : 0.3 + 0.7 * Math.pow(clamp((minute - duration - DRAIN) / (interval - duration - DRAIN)), 1.25);
-  const resting = full - deficit * (1 - warmth);
   const now = boilingNow(depth, state);
   if (depth < state.level - 0.2) return BOIL_VENT + 0.6;
-  return erupting ? Math.min(full, now + 0.5) : Math.min(resting, now - 0.15);
+  const { duration, interval } = cycle;
+  if (minute < duration + DRAIN) return now + 0.3 + Math.max(0, boilingFull(depth) - now) * Math.exp(-minute / FLASH);
+  const refill = clamp((minute - duration - DRAIN) / (interval - PREPLAY - duration - DRAIN));
+  const deficit = (5 + 9 * Math.exp(-depth / 6)) * smoothstep(0, 0.06, refill);
+  return now - 0.15 - deficit * (1 - Math.pow(refill, 1.3));
 }
 
 export const fmtClock = (minutes) => {
