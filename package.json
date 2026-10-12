@@ -1,0 +1,11 @@
+{
+  "name": "anatomy-examples",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/site.mjs",
+    "preview": "node scripts/site.mjs && npx --yes serve dist"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

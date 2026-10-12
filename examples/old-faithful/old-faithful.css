@@ -1,0 +1,122 @@
+.of .iso-plate {
+  overflow: hidden;
+}
+
+.of {
+  --of-sinter: #1f1f1e;
+  --of-gravel: #191919;
+  --of-rhyolite: #151515;
+  --of-cavity: #090909;
+  --of-boss: #232323;
+  --of-water: #2a3a44;
+  --of-jet: #b9c3c9;
+  --of-steam: #8a9095;
+}
+
+.iso[data-theme="light"] .of,
+.of[data-theme="light"] {
+  --of-sinter: #fbfaf6;
+  --of-gravel: #f1f0eb;
+  --of-rhyolite: #e7e7e3;
+  --of-cavity: #c9cdd0;
+  --of-boss: #ffffff;
+  --of-water: #8fa3b0;
+  --of-jet: #a9b7c1;
+  --of-steam: #d3d9de;
+}
+
+.of-sinter {
+  fill: var(--of-sinter);
+}
+
+.of-gravel {
+  fill: var(--of-gravel);
+}
+
+.of-rhyolite {
+  fill: var(--of-rhyolite);
+}
+
+.of-cavity {
+  fill: var(--of-cavity);
+}
+
+.of-boss {
+  fill: var(--of-boss);
+}
+
+.of-window {
+  fill: var(--anatomy-faint);
+  opacity: 0.8;
+}
+
+.of-water {
+  fill: var(--of-water);
+  opacity: 0.85;
+}
+
+.of-jet {
+  fill: var(--of-jet);
+  filter: blur(1.6px);
+}
+
+.of-steam circle {
+  fill: var(--of-steam);
+  filter: blur(6px);
+}
+
+.of-stage {
+  position: relative;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+
+.of-stage[data-gl] .of-fallback {
+  display: none;
+}
+
+.of-said {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.of-stage:focus-visible {
+  outline: 1px solid var(--anatomy-muted);
+  outline-offset: 6px;
+}
+
+.of-stage > svg,
+.of-stage > canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.of-stage > .of-layer {
+  position: absolute;
+  inset: 0;
+  height: 100% !important;
+  pointer-events: none;
+}
+
+@media (max-width: 560px) {
+  .of .iso-plate {
+    padding: 48px 6px 70px;
+  }
+
+  .of-stage:focus-visible {
+    outline: none;
+  }
+
+  .of .iso-plate:has(.of-stage:focus-visible) {
+    outline: 1px solid var(--anatomy-muted);
+    outline-offset: 4px;
+  }
+}
