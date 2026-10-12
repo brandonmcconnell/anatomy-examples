@@ -1,6 +1,18 @@
 # anatomy-examples
 
-Interactive isometric figures built with the anatomy kit (`kit/`).
+The [Anatomy](https://skills.wheresryan.sh/anatomy) skill is installed in this repo at [`.cursor/skills/anatomy`](.cursor/skills/anatomy).
+
+Ask for a figure by naming the idea, not the drawing:
+
+```text
+/anatomy explain how a token bucket rate limiter works, interactive
+```
+
+Cursor loads the skill automatically for isometric illustrations, explanatory diagrams, and interactive explainers. The skill folder includes `SKILL.md`, the drawing kit, eight examples, and the verification scripts.
+
+Upstream: [wheresryan22/anatomy](https://github.com/wheresryan22/anatomy)
+
+Interactive figures built with the skill live in `examples/` and are published as a site (below). They build against `kit/` and `scripts/` at the repo root, a copy of the skill's kit and verification scripts. The one difference is an optional `description` option on `pageHtml`, which the homepage cards read.
 
 ## Site
 
