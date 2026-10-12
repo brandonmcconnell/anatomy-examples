@@ -57,7 +57,7 @@
 
 .of-jet {
   fill: var(--of-jet);
-  opacity: 0.85;
+  filter: blur(1.6px);
 }
 
 .of-steam circle {
