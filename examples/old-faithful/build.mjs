@@ -528,7 +528,8 @@ const body = `<div class="of">${k.plateHtml({
 const MODEL = readFileSync(join(HERE, "model.mjs"), "utf8").replace(/^export /gm, "");
 const CSS = readFileSync(join(HERE, "old-faithful.css"), "utf8");
 const LIVE = readFileSync(join(HERE, "live.js"), "utf8").replace("__DATA__", JSON.stringify(DATA));
-const page = k.pageHtml({ title: "Old Faithful", theme, body: `<style>${CSS}</style>${body}`, script: kitScript() + glScript() + MODEL + LIVE, width: 700 });
+const description = "A cutaway of Old Faithful's conduit through one eruption cycle: refill, superheated water flashing to steam, the jet, and the Park Service's short and long intervals.";
+const page = k.pageHtml({ title: "Old Faithful", description, theme, body: `<style>${CSS}</style>${body}`, script: kitScript() + glScript() + MODEL + LIVE, width: 700 });
 const name = theme === "light" ? "old-faithful-light.html" : "old-faithful.html";
 writeFileSync(join(HERE, name), page);
 console.log("wrote", name, `${(page.length / 1024).toFixed(0)} KB`, `${back.length + front.length} layers`, `scale ${P.scale.toFixed(3)}`);
